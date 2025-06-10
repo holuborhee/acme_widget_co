@@ -8,6 +8,16 @@ class BuyOneGetOneHalfPriceOfferTest < Minitest::Test
     @offer = BuyOneGetOneHalfPriceOffer.new(@product)
   end
 
+  def test_apply_raises_error_for_invalid_quantity
+    assert_raises(ArgumentError, "Quantity must be at least 1") do
+      @offer.apply(0)
+    end
+
+    assert_raises(ArgumentError) do
+      @offer.apply(-2)
+    end
+  end
+
   def test_single_item_no_discount
     assert_equal 32.95, @offer.apply(1)
   end
